@@ -1,0 +1,26 @@
+---
+- name: Copy file from Jenkins workspace to Tomcat
+  hosts: all
+  become: yes
+  vars:
+    jenkins_workspace: "/var/jenkins_home/workspace/ansible-tomcat-install-deploy/demo-app/target"
+    tomcat_webapps_dir: "/opt/tomcat/webapps"
+  tasks:
+    - name: Ensure Tomcat webapps directory exists
+      file:
+        path: "{{ tomcat_webapps_dir }}"
+        state: directory
+
+    - name: Copy WAR file from Jenkins workspace to Tomcat webapps directory
+      copy:
+        src: "{{ jenkins_workspace }}/demo-app.war"
+        dest: "{{ tomcat_webapps_dir }}/demo-app.war"
+        remote_src: yes
+
+    - name: Restart Tomcat
+      command: /opt/tomcat/bin/shutdown.sh
+      ignore_errors: yes
+      when: ansible_facts.services['tomcat']
+
+    - name: Start Tomcat
+      command: /opt/tomcat/bin/startup.sh
