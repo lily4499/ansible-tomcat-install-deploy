@@ -24,6 +24,12 @@
         dest: /tmp
         remote_src: yes
 
+    - name: Remove existing Tomcat directory
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-10.1.33
+        state: absent
+    
+    
     - name: Move Tomcat to /opt directory
       command:
         cmd: mv /tmp/apache-tomcat-10.1.33 /opt/tomcat
