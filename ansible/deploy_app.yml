@@ -16,7 +16,7 @@
     - name: Stop Tomcat if running
       ansible.builtin.shell:
         cmd: /opt/tomcat/bin/shutdown.sh
-        ignore_errors: yes
+      ignore_errors: yes
 
     - name: Start Tomcat
       ansible.builtin.shell:
