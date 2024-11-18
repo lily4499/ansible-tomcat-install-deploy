@@ -58,13 +58,14 @@
       replace:
         path: /opt/tomcat/webapps/manager/META-INF/context.xml
         regexp: '<Valve className="org.apache.catalina.valves.RemoteAddrValve".*?/>'
-        replace: '<!-- \1 -->'
+        replace: '<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve" /> -->'
 
     - name: Comment out <Valve> element in Host Manager's context.xml
       replace:
         path: /opt/tomcat/webapps/host-manager/META-INF/context.xml
         regexp: '<Valve className="org.apache.catalina.valves.RemoteAddrValve".*?/>'
-        replace: '<!-- \1 -->'
+        replace: '<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve" /> -->'
+
 
     - name: Start Tomcat
       command: /opt/tomcat/bin/startup.sh
